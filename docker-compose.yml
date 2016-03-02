@@ -1,0 +1,23 @@
+nginx:
+  build: ./nginx
+  volumes:
+    - ./webroot:/var/www/html
+  ports:
+   - "80:80"
+  links:
+    - phpfpm
+phpfpm:
+  command: php-fpm --allow-to-run-as-root
+  build: ./php
+  volumes:
+    - ./webroot:/var/www/html
+  links:
+    - mysql
+mysql:
+  build: ./mysql
+  volumes:
+    - ./mysql_data:/var/lib/mysql
+    - ./stack/localdb/:/stack/localdb:rw
+  environment:
+    MYSQL_ROOT_PASSWORD: pass
+  command: "/stack/localdb/run.sh"

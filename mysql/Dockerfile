@@ -1,0 +1,1 @@
+FROM daocloud.io/mysql:5.6
